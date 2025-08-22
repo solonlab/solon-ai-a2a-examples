@@ -3,17 +3,13 @@ package com.wht.a2a;
 
 import cn.hutool.json.JSONUtil;
 import com.wht.a2a.model.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import org.noear.solon.net.http.HttpResponse;
 import org.noear.solon.net.http.HttpUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A2A protocol client implementation
@@ -101,32 +97,25 @@ public class A2AClient {
                         params
                 );
 
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .connectTimeout(10, TimeUnit.SECONDS)
-                        .writeTimeout(50, TimeUnit.SECONDS)
-                        .readTimeout(10, TimeUnit.MINUTES)
-                        .build();
+
 
                 String requestBody = JSONUtil.toJsonStr(request);
 
-                RequestBody body = RequestBody.create(
-                        okhttp3.MediaType.parse("application/json; charset=utf-8"),
-                        requestBody);
-                // 请求对象
-                Request httpRequest = new Request.Builder()
-                        .url(baseUrl + "/a2a/stream")
-                        .header("Content-Type", "application/json")
+                HttpUtils req = HttpUtils.http(baseUrl + "/a2a/stream")
+                        .contentType("application/json")
+                        .charset("utf-8")
                         .header("Accept", "text/event-stream")
-                        .post(body)
-                        .build();
+                        .bodyOfJson(requestBody);
 
-                try (Response response = client.newCall(httpRequest).execute()) {
+                       // .exec("POST");
+
+                try (HttpResponse response = req.exec("POST")) {
                     if (response.code() != 200) {
                         listener.onError(new Exception("HTTP " + response.code() + ": " + response.body()));
                         return;
                     }
 
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.body().byteStream()));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.body()));
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (line.trim().isEmpty()) {
