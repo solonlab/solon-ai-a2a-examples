@@ -1,0 +1,17 @@
+server.port: 10001
+
+solon.app:
+  name: 'solon-a2a-server1'
+
+solon.logging:
+  appender:
+    console:
+      level: INFO
+    file:
+      level: INFO
+
+solon.ai:
+  demo:
+    apiUrl: "http://127.0.0.1:11434/api/chat"
+    provider: "ollama"
+    model: "qwen2.5:latest"

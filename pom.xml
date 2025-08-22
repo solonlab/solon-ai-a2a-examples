@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.noear</groupId>
+    <artifactId>solon-ai-a2a-examples</artifactId>
+    <version>demo</version>
+
+    <packaging>pom</packaging>
+
+    <description>Java project for solon-ai-a2a-examples</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <modules>
+        <module>solon-a2a-demo</module>
+        <module>solon-a2a-mcp1</module>
+        <module>solon-a2a-mcp2</module>
+        <module>solon-a2a-server1</module>
+        <module>solon-a2a-server2</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    <configuration>
+                        <compilerArgument>-parameters</compilerArgument>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
