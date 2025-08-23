@@ -10,6 +10,7 @@ import org.noear.solon.ai.a2a.model.AgentCard;
 import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.ai.chat.message.ChatMessage;
+import org.noear.solon.annotation.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 /**
  * @author by HaiTao.Wang on 2025/8/21.
  */
+@Component
 @Data
 public class HostAgent {
 

@@ -1,7 +1,6 @@
 package com.a2a.server1.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONUtil;
+import org.noear.snack.ONode;
 import org.noear.solon.ai.a2a.model.*;
 import org.noear.solon.ai.a2a.server.A2AServer;
 import org.noear.solon.annotation.*;
@@ -86,7 +85,7 @@ public class A2AController {
                     return;
                 }
 
-                TaskSendParams params = BeanUtil.copyProperties(request.getParams(), TaskSendParams.class);
+                TaskSendParams params = ONode.load(request.getParams()).toObject(TaskSendParams.class);
 
                 // Create initial status with timestamp
                 TaskStatus initialStatus = new TaskStatus(
@@ -110,7 +109,7 @@ public class A2AController {
                         null
                 );
 
-                emitter.send(new SseEvent().name("task-complete").data(JSONUtil.toJsonStr(initialResponse)));
+                emitter.send(new SseEvent().name("task-complete").data(ONode.stringify(initialResponse)));
 
                 // Process task
                 JSONRPCResponse taskResponse = server.handleTaskSend(request);
@@ -136,7 +135,7 @@ public class A2AController {
                         null
                 );
 
-                emitter.send(new SseEvent().name("task-update").data(JSONUtil.toJsonStr(finalResponse)));
+                emitter.send(new SseEvent().name("task-update").data(ONode.stringify(finalResponse)));
 
                 emitter.complete();
 
@@ -170,7 +169,7 @@ public class A2AController {
                     error
             );
 
-            emitter.send(new SseEvent().name("error").data(JSONUtil.toJsonStr(errorResponse)));
+            emitter.send(new SseEvent().name("error").data(ONode.stringify(errorResponse)));
 
             emitter.error(new RuntimeException(message));
 

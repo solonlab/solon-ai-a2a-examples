@@ -1,6 +1,5 @@
 package com.a2a.server1.config;
 
-import cn.hutool.core.collection.CollUtil;
 import com.a2a.server1.tool.Server1Tools;
 import org.noear.solon.ai.a2a.model.*;
 import org.noear.solon.ai.a2a.server.A2AServer;
@@ -12,6 +11,7 @@ import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,16 +48,16 @@ public class A2AServerConfig {
         AgentCapabilities capabilities = new AgentCapabilities(false, false, false);
 
         //鉴权
-        AgentAuthentication authentication = new AgentAuthentication(CollUtil.newArrayList("bearer"), null);
+        AgentAuthentication authentication = new AgentAuthentication(Arrays.asList("bearer"), null);
 
         AgentSkill skill = new AgentSkill(
                 "ai-weather",
                 "天气服务",
                 "专业的天气预报助手。主要任务是利用所提供的工具获取并传递天气信息",
-                CollUtil.newArrayList("天气", "天气预报", "温度", "气温"),
-                CollUtil.newArrayList("示例：今天的天气", "示例：今天的气温", "近三天的天气预报"),
-                CollUtil.newArrayList("text"),
-                CollUtil.newArrayList("text"));
+                Arrays.asList("天气", "天气预报", "温度", "气温"),
+                Arrays.asList("示例：今天的天气", "示例：今天的气温", "近三天的天气预报"),
+                Arrays.asList("text"),
+                Arrays.asList("text"));
 
         return new AgentCard("weather_agent",
                 "A professional weather forecast assistant. It can accurately predict the weather and temperature.",
@@ -67,9 +67,9 @@ public class A2AServerConfig {
                 "http://localhost:10001/docs",
                 capabilities,
                 authentication,
-                CollUtil.newArrayList("text"),
-                CollUtil.newArrayList("text"),
-                CollUtil.newArrayList(skill));
+                Arrays.asList("text"),
+                Arrays.asList("text"),
+                Arrays.asList(skill));
     }
 
 
@@ -93,10 +93,10 @@ public class A2AServerConfig {
                         UUID.randomUUID().toString(),
                         "message",
                         "assistant",
-                        CollUtil.newArrayList(responsePart),
+                        Arrays.asList(responsePart),
                         message.getContextId(),
                         task.getId(),
-                        CollUtil.newArrayList(message.getMessageId()),
+                        Arrays.asList(message.getMessageId()),
                         null
                 );
 
@@ -109,10 +109,10 @@ public class A2AServerConfig {
 
                 // Add response to history
                 List<Message> updatedHistory = task.getHistory() != null ?
-                        CollUtil.newArrayList(task.getHistory().toArray(new Message[0])) :
-                        CollUtil.newArrayList();
+                        Arrays.asList(task.getHistory().toArray(new Message[0])) :
+                        Arrays.asList();
 
-                updatedHistory = CollUtil.newArrayList(
+                updatedHistory = Arrays.asList(
                         java.util.stream.Stream.concat(
                                 updatedHistory.stream(),
                                 java.util.stream.Stream.of(message, responseMessage)

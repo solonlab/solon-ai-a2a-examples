@@ -1,6 +1,5 @@
 package com.a2a.server2.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import org.noear.snack.ONode;
 import org.noear.solon.ai.a2a.model.*;
 import org.noear.solon.ai.a2a.server.A2AServer;
@@ -85,7 +84,7 @@ public class A2AController {
                     return;
                 }
 
-                TaskSendParams params = BeanUtil.copyProperties(request.getParams(), TaskSendParams.class);
+                TaskSendParams params = ONode.load(request.getParams()).toObject(TaskSendParams.class);
 
                 // Create initial status with timestamp
                 TaskStatus initialStatus = new TaskStatus(

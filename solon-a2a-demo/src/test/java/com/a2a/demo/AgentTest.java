@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.test.HttpTester;
 import org.noear.solon.test.SolonTest;
 
 @SolonTest(value = ClientApp.class)
-public class AgentTest extends HttpTester {
+public class AgentTest {
     @Inject
     HostAgent hostAgent;
 
