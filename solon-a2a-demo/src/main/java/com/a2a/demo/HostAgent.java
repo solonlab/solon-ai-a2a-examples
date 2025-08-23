@@ -1,7 +1,5 @@
 package com.a2a.demo;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -12,6 +10,7 @@ import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.ai.chat.message.ChatMessage;
 import org.noear.solon.annotation.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +31,9 @@ public class HostAgent {
     public final Map<String, A2AClient> a2AClientMap;
 
     public HostAgent() {
-        this.agentCards = CollUtil.newArrayList();
-        this.agentInfo = CollUtil.newArrayList();
-        this.a2AClientMap = MapUtil.newHashMap();
+        this.agentCards = new ArrayList<>();
+        this.agentInfo = new ArrayList<>();
+        this.a2AClientMap = new HashMap<>();
     }
 
     public void addChatModel(ChatModel chatModel) {
