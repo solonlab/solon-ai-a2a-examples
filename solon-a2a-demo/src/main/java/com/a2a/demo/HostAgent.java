@@ -1,7 +1,6 @@
 package com.a2a.demo;
 
 import cn.hutool.core.util.StrUtil;
-import lombok.Data;
 import lombok.SneakyThrows;
 import org.noear.solon.ai.a2a.client.A2AClient;
 import org.noear.solon.ai.a2a.model.AgentCard;
@@ -19,7 +18,6 @@ import java.util.Map;
  * @author by HaiTao.Wang on 2025/8/21.
  */
 @Component
-@Data
 public class HostAgent {
 
     private ChatModel chatModel = null;
@@ -34,6 +32,18 @@ public class HostAgent {
         this.agentCards = new ArrayList<>();
         this.agentInfo = new ArrayList<>();
         this.a2AClientMap = new HashMap<>();
+    }
+
+    public List<Map<String, String>> getAgentInfo() {
+        return agentInfo;
+    }
+
+    public List<AgentCard> getAgentCards() {
+        return agentCards;
+    }
+
+    public Map<String, A2AClient> getA2AClientMap() {
+        return a2AClientMap;
     }
 
     public void addChatModel(ChatModel chatModel) {
@@ -62,7 +72,6 @@ public class HostAgent {
 
     @SneakyThrows
     public ChatResponse chat(String userMessage) {
-
         String systemPrompt = StrUtil.format(
                 "您是一位擅长分配任务的专家，负责将用户请求分解为子代理可以执行的任务。能够将用户请求分配给合适的远程代理。\n" +
                         "\n" +
@@ -83,8 +92,5 @@ public class HostAgent {
         );
 
         return chatModel.prompt(ChatMessage.ofSystem(systemPrompt), ChatMessage.ofUser(userMessage)).call();
-
     }
-
-
 }
