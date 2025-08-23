@@ -1,7 +1,6 @@
-package com.a2a.demo.tool;
+package com.a2a.demo;
 
 import cn.hutool.core.collection.CollUtil;
-import com.a2a.demo.HostAgent;
 import lombok.SneakyThrows;
 import org.noear.solon.ai.a2a.model.Message;
 import org.noear.solon.ai.a2a.model.TaskSendParams;
@@ -18,7 +17,7 @@ import java.util.Map;
  * @author haiTao.Wang on 2025/8/21.
  */
 @Component
-public class DemoTools {
+public class HostAgentTools {
 
     @Inject
     HostAgent hostAgent;

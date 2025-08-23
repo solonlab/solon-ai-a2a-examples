@@ -1,7 +1,5 @@
 package com.a2a.demo;
 
-import com.a2a.demo.tool.DemoTools;
-
 import lombok.SneakyThrows;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +14,7 @@ public class AgentTest {
     HostAgent hostAgent;
 
     @Inject
-    DemoTools demoTools;
+    HostAgentTools hostAgentTools;
 
     @SneakyThrows
     @Test
@@ -24,7 +22,7 @@ public class AgentTest {
         ChatModel chatModel = ChatModel.of("http://127.0.0.1:11434/api/chat")
                 .provider("ollama")
                 .model("qwen2.5:latest")
-                .defaultToolsAdd(demoTools)
+                .defaultToolsAdd(hostAgentTools)
                 .build();
 
         hostAgent.addChatModel(chatModel);
