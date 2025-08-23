@@ -10,9 +10,3 @@ solon.logging:
       level: INFO
     file:
       level: INFO
-
-solon.ai:
-  demo:
-    apiUrl: "http://127.0.0.1:11434/api/chat"
-    provider: "ollama"
-    model: "qwen3:8b"
