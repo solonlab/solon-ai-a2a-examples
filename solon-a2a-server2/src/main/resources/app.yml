@@ -1,8 +1,7 @@
 server.port: 10002
 
 solon.app:
-  name: 'demo-app'
-  group: 'demo'
+  name: 'solon-a2a-server2'
 
 solon.logging:
   appender:
