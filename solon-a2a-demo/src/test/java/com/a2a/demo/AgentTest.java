@@ -1,7 +1,7 @@
 package com.a2a.demo;
 
 import org.junit.jupiter.api.Test;
-import org.noear.solon.ai.a2a.client.A2AAgent;
+import org.noear.solon.ai.a2a.client.HostAgent;
 import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.test.SolonTest;
@@ -11,7 +11,7 @@ public class AgentTest {
 
     @Test
     public void test1() throws Exception {
-        A2AAgent agent = new A2AAgent();
+        HostAgent agent = new HostAgent();
 
         ChatModel chatModel = ChatModel.of("http://127.0.0.1:11434/api/chat")
                 .provider("ollama")
