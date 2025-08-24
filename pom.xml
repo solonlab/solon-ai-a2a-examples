@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>solon-parent</artifactId>
+        <version>3.5.1-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+
     <groupId>org.noear</groupId>
     <artifactId>solon-ai-a2a-examples</artifactId>
     <version>demo</version>
@@ -20,6 +27,7 @@
         <module>solon-a2a-demo</module>
         <module>solon-a2a-server1</module>
         <module>solon-a2a-server2</module>
+        <module>solon-ai-a2a</module>
     </modules>
 
     <build>
