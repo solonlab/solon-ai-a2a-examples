@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * @author haiTao.Wang on 2025/8/21.
  */
-class HostAgentAssistantTools {
+public class HostAgentAssistantTools {
     private HostAgent hostAgent;
 
     public HostAgentAssistantTools(HostAgent hostAgent) {
