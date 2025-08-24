@@ -41,34 +41,33 @@ public class A2AServerConfig {
      * Create translation agent card
      */
     private AgentCard createAgentCard() {
-
-        AgentProvider provider = new AgentProvider("ollama", "http://127.0.0.1:11434/api/chat");
-
-        AgentCapabilities capabilities = new AgentCapabilities(false, false, false);
-
-        //鉴权
-        AgentAuthentication authentication = new AgentAuthentication(Arrays.asList("bearer"), null);
-
-        AgentSkill skill = new AgentSkill(
-                "ai-spot",
-                "景区推荐",
-                "专业的景区推荐助手。主要任务是推荐景点信息",
-                Arrays.asList("旅游", "景区", "景点", "游玩"),
-                Arrays.asList("示例：有哪些景区", "示例：有哪些玩的地方", "推荐一些景点"),
-                Arrays.asList("text"),
-                Arrays.asList("text"));
-
-        return new AgentCard("spot_agent",
-                "A professional scenic spot recommendation assistant. It can accurately recommend attractions and places to visit.",
-                "http://localhost:10002/a2a",
-                provider,
-                "1.0.0",
-                "http://localhost:10002/docs",
-                capabilities,
-                authentication,
-                Arrays.asList("text"),
-                Arrays.asList("text"),
-                Arrays.asList(skill));
+        return AgentCard.builder()
+                .name("spot_agent")
+                .description("A professional scenic spot recommendation assistant. It can accurately recommend attractions and places to visit.")
+                .url("http://localhost:10002/a2a")
+                .documentationUrl("http://localhost:10002/docs")
+                .version("1.0.0")
+                .provider(AgentProvider.builder()
+                        .organization("ollama")
+                        .url("http://127.0.0.1:11434/api/chat")
+                        .build())
+                .capabilities(AgentCapabilities.builder()
+                        .streaming(false)
+                        .pushNotifications(false)
+                        .stateTransitionHistory(false)
+                        .build())
+                .defaultInputModes(Arrays.asList("text"))
+                .defaultOutputModes(Arrays.asList("text"))
+                .skills(Arrays.asList(AgentSkill.builder()
+                        .id("ai-spot")
+                        .name("景区推荐")
+                        .description("专业的景区推荐助手。主要任务是推荐景点信息")
+                        .tags(Arrays.asList("旅游", "景区", "景点", "游玩"))
+                        .examples(Arrays.asList("示例：有哪些景区", "示例：有哪些玩的地方", "推荐一些景点"))
+                        .inputModes(Arrays.asList("text"))
+                        .outputModes(Arrays.asList("text"))
+                        .build()))
+                .build();
     }
 
 
@@ -175,5 +174,4 @@ public class A2AServerConfig {
                 originalTask.getMetadata()
         );
     }
-
 }

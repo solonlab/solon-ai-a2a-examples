@@ -1,6 +1,7 @@
 package org.noear.solon.ai.a2a.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * @author by HaiTao.Wang on 2025/8/21.
  */
+@Builder
 @AllArgsConstructor
 @Data
 public class AgentCard {
