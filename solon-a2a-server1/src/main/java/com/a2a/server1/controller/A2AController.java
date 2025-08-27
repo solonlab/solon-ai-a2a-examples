@@ -1,7 +1,7 @@
 package com.a2a.server1.controller;
 
-import org.noear.solon.ai.a2a.server.A2AServer;
-import org.noear.solon.ai.a2a.server.A2AServerEndpoint;
+import io.a2a_preview.server.A2AServer;
+import io.a2a_preview.server.A2AServerEndpoint;
 import org.noear.solon.annotation.*;
 
 /**

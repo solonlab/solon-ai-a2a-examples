@@ -1,9 +1,9 @@
 package com.a2a.server2.config;
 
 import com.a2a.server2.tool.Server2Tools;
-import org.noear.solon.ai.a2a.model.*;
-import org.noear.solon.ai.a2a.server.A2AServer;
-import org.noear.solon.ai.a2a.server.TaskHandler;
+import io.a2a_preview.model.*;
+import io.a2a_preview.server.A2AServer;
+import io.a2a_preview.server.TaskHandler;
 import org.noear.solon.ai.chat.ChatConfig;
 import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.annotation.Bean;
