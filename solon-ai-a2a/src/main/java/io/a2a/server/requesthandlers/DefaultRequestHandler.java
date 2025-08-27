@@ -47,13 +47,13 @@ import io.a2a.spec.TaskNotFoundError;
 import io.a2a.spec.TaskPushNotificationConfig;
 import io.a2a.spec.TaskQueryParams;
 import io.a2a.spec.UnsupportedOperationError;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+//import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class DefaultRequestHandler implements RequestHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRequestHandler.class);
@@ -69,7 +69,7 @@ public class DefaultRequestHandler implements RequestHandler {
 
     private final Executor executor;
 
-    @Inject
+    //@Inject
     public DefaultRequestHandler(AgentExecutor agentExecutor, TaskStore taskStore,
                                  QueueManager queueManager, PushNotificationConfigStore pushConfigStore,
                                  PushNotificationSender pushSender, @Internal Executor executor) {
@@ -144,7 +144,8 @@ public class DefaultRequestHandler implements RequestHandler {
 
         EventConsumer consumer = new EventConsumer(queue);
         EventKind type = resultAggregator.consumeAll(consumer);
-        if (type instanceof Task tempTask) {
+        if (type instanceof Task) {
+            Task tempTask = (Task) type;
             return tempTask;
         }
 
@@ -173,7 +174,7 @@ public class DefaultRequestHandler implements RequestHandler {
             // any errors thrown by the producerRunnable are not picked up by the consumer
             producerRunnable.addDoneCallback(consumer.createAgentRunnableDoneCallback());
             etai = resultAggregator.consumeAndBreakOnInterrupt(consumer);
-            
+
             if (etai == null) {
                 LOGGER.debug("No result, throwing InternalError");
                 throw new InternalError("No result");
@@ -182,8 +183,11 @@ public class DefaultRequestHandler implements RequestHandler {
             LOGGER.debug("Was interrupted: {}", interrupted);
 
             EventKind kind = etai.eventType();
-            if (kind instanceof Task taskResult && !taskId.equals(taskResult.getId())) {
-                throw new InternalError("Task ID mismatch in agent response");
+            if (kind instanceof Task) {
+                Task taskResult = (Task) kind;
+                if (!taskId.equals(taskResult.getId())) {
+                    throw new InternalError("Task ID mismatch in agent response");
+                }
             }
 
         } finally {
@@ -220,38 +224,40 @@ public class DefaultRequestHandler implements RequestHandler {
 
             Flow.Publisher<Event> eventPublisher =
                     processor(createTubeConfig(), results, ((errorConsumer, event) -> {
-                if (event instanceof Task createdTask) {
-                    if (!Objects.equals(taskId.get(), createdTask.getId())) {
-                        errorConsumer.accept(new InternalError("Task ID mismatch in agent response"));
-                    }
+                        if (event instanceof Task) {
+                            Task createdTask = (Task) event;
+                            if (!Objects.equals(taskId.get(), createdTask.getId())) {
+                                errorConsumer.accept(new InternalError("Task ID mismatch in agent response"));
+                            }
 
-                    // TODO the Python implementation no longer has the following block but removing it causes
-                    //  failures here
-                    try {
-                        queueManager.add(createdTask.getId(), queue);
-                        taskId.set(createdTask.getId());
-                    } catch (TaskQueueExistsException e) {
-                        // TODO Log
-                    }
-                    if (pushConfigStore != null &&
-                            params.configuration() != null &&
-                            params.configuration().pushNotification() != null) {
+                            // TODO the Python implementation no longer has the following block but removing it causes
+                            //  failures here
+                            try {
+                                queueManager.add(createdTask.getId(), queue);
+                                taskId.set(createdTask.getId());
+                            } catch (TaskQueueExistsException e) {
+                                // TODO Log
+                            }
+                            if (pushConfigStore != null &&
+                                    params.configuration() != null &&
+                                    params.configuration().pushNotification() != null) {
 
-                        pushConfigStore.setInfo(
-                                createdTask.getId(),
-                                params.configuration().pushNotification());
-                    }
+                                pushConfigStore.setInfo(
+                                        createdTask.getId(),
+                                        params.configuration().pushNotification());
+                            }
 
-                }
-                if (pushSender != null && taskId.get() != null) {
-                    EventKind latest = resultAggregator.getCurrentResult();
-                    if (latest instanceof Task latestTask) {
-                        pushSender.sendNotification(latestTask);
-                    }
-                }
+                        }
+                        if (pushSender != null && taskId.get() != null) {
+                            EventKind latest = resultAggregator.getCurrentResult();
+                            if (latest instanceof Task) {
+                                Task latestTask = (Task)latest;
+                                pushSender.sendNotification(latestTask);
+                            }
+                        }
 
-                return true;
-            }));
+                        return true;
+                    }));
 
             return convertingProcessor(eventPublisher, event -> (StreamingEventKind) event);
         } finally {
@@ -425,5 +431,27 @@ public class DefaultRequestHandler implements RequestHandler {
         return new MessageSendSetup(taskManager, task, requestContext);
     }
 
-    private record MessageSendSetup(TaskManager taskManager, Task task, RequestContext requestContext) {}
+    private class MessageSendSetup {
+        TaskManager taskManager;
+        Task task;
+        RequestContext requestContext;
+
+        public MessageSendSetup(TaskManager taskManager, Task task, RequestContext requestContext) {
+            this.taskManager = taskManager;
+            this.task = task;
+            this.requestContext = requestContext;
+        }
+
+        public Task task() {
+            return task;
+        }
+
+        public RequestContext requestContext() {
+            return requestContext;
+        }
+
+        public TaskManager taskManager() {
+            return taskManager;
+        }
+    }
 }

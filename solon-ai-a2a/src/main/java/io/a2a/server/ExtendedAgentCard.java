@@ -9,9 +9,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import jakarta.inject.Qualifier;
+//import jakarta.inject.Qualifier;
 
-@Qualifier
+//@Qualifier
 @Retention(RUNTIME)
 @Target({FIELD, TYPE, METHOD, PARAMETER})
 public @interface ExtendedAgentCard {

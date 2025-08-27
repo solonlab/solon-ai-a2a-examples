@@ -57,7 +57,8 @@ public class EventConsumer {
                         if (event == null) {
                             continue;
                         }
-                        if (event instanceof Throwable thr) {
+                        if (event instanceof Throwable) {
+                            Throwable thr = (Throwable) event;
                             tube.fail(thr);
                             return;
                         }
@@ -72,11 +73,15 @@ public class EventConsumer {
                     }
 
                     boolean isFinalEvent = false;
-                    if (event instanceof TaskStatusUpdateEvent tue && tue.isFinal()) {
-                        isFinalEvent = true;
+                    if (event instanceof TaskStatusUpdateEvent) {
+                        TaskStatusUpdateEvent tue = (TaskStatusUpdateEvent) event;
+                        if (tue.isFinal()) {
+                            isFinalEvent = true;
+                        }
                     } else if (event instanceof Message) {
                         isFinalEvent = true;
-                    } else if (event instanceof Task task) {
+                    } else if (event instanceof Task) {
+                        Task task = (Task) event;
                         switch (task.getStatus().state()) {
                             case COMPLETED:
                             case CANCELED:

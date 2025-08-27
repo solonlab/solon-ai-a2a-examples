@@ -53,7 +53,8 @@ public class ResultAggregator {
                 createTubeConfig(),
                 all,
                 (event) -> {
-                    if (event instanceof Message msg) {
+                    if (event instanceof Message) {
+                        Message msg = (Message)event;
                         message = msg;
                         if (returnedEvent.get() == null) {
                             returnedEvent.set(msg);
@@ -80,11 +81,13 @@ public class ResultAggregator {
                 createTubeConfig(),
                 all,
                 (event -> {
-                    if (event instanceof Throwable t) {
+                    if (event instanceof Throwable) {
+                        Throwable t = (Throwable) event;
                         errorRef.set(t);
                         return false;
                     }
-                    if (event instanceof Message msg) {
+                    if (event instanceof Message) {
+                        Message msg = (Message) event;
                         this.message = msg;
                         message.set(msg);
                         return false;
@@ -92,8 +95,23 @@ public class ResultAggregator {
 
                     callTaskManagerProcess(event);
 
-                    if ((event instanceof Task task && task.getStatus().state() == TaskState.AUTH_REQUIRED)
-                            || (event instanceof TaskStatusUpdateEvent tsue && tsue.getStatus().state() == TaskState.AUTH_REQUIRED)) {
+                    boolean isOk = false;
+
+                    if (event instanceof Task) {
+                        Task task = (Task) event;
+                        if (task.getStatus().state() == TaskState.AUTH_REQUIRED) {
+                            isOk = true;
+                        }
+                    }
+
+                    if (event instanceof TaskStatusUpdateEvent) {
+                        TaskStatusUpdateEvent tsue = (TaskStatusUpdateEvent) event;
+                        if (tsue.getStatus().state() == TaskState.AUTH_REQUIRED) {
+                            isOk = true;
+                        }
+                    }
+
+                    if (isOk) {
                         // auth-required is a special state: the message should be
                         // escalated back to the caller, but the agent is expected to
                         // continue producing events once the authorization is received
@@ -125,11 +143,12 @@ public class ResultAggregator {
                     callTaskManagerProcess(event);
                     return true;
                 },
-                t -> {});
+                t -> {
+                });
     }
 
     private void callTaskManagerProcess(Event event) {
-         try {
+        try {
             taskManager.process(event);
         } catch (A2AServerException e) {
             // TODO Decide what to do in case of failure
@@ -137,7 +156,21 @@ public class ResultAggregator {
         }
     }
 
-    public record EventTypeAndInterrupt(EventKind eventType, boolean interrupted) {
+    public class EventTypeAndInterrupt {
+        EventKind eventType;
+        boolean interrupted;
 
+        public EventTypeAndInterrupt(EventKind eventType, boolean interrupted) {
+            this.eventType = eventType;
+            this.interrupted = interrupted;
+        }
+
+        public EventKind eventType() {
+            return eventType;
+        }
+
+        public boolean interrupted() {
+            return interrupted;
+        }
     }
 }

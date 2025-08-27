@@ -1,7 +1,7 @@
 package io.a2a.server.tasks;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+//import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.inject.Inject;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ import io.a2a.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class BasePushNotificationSender implements PushNotificationSender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasePushNotificationSender.class);
@@ -27,7 +27,7 @@ public class BasePushNotificationSender implements PushNotificationSender {
     private final A2AHttpClient httpClient;
     private final PushNotificationConfigStore configStore;
 
-    @Inject
+    //@Inject
     public BasePushNotificationSender(PushNotificationConfigStore configStore) {
         this.httpClient = new JdkA2AHttpClient();
         this.configStore = configStore;

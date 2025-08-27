@@ -1,8 +1,8 @@
 package io.a2a.server.requesthandlers;
 
 import static io.a2a.server.util.async.AsyncUtils.createTubeConfig;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+//import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.concurrent.Flow;
@@ -37,7 +37,7 @@ import io.a2a.spec.TaskPushNotificationConfig;
 import io.a2a.spec.TaskResubscriptionRequest;
 import mutiny.zero.ZeroPublisher;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class JSONRPCHandler {
 
     private AgentCard agentCard;
@@ -46,7 +46,7 @@ public class JSONRPCHandler {
     protected JSONRPCHandler() {
     }
 
-    @Inject
+    //@Inject
     public JSONRPCHandler(@PublicAgentCard AgentCard agentCard, RequestHandler requestHandler) {
         this.agentCard = agentCard;
         this.requestHandler = requestHandler;
@@ -160,7 +160,7 @@ public class JSONRPCHandler {
     }
 
     public ListTaskPushNotificationConfigResponse listPushNotificationConfig(ListTaskPushNotificationConfigRequest request) {
-        if ( !agentCard.capabilities().pushNotifications()) {
+        if (!agentCard.capabilities().pushNotifications()) {
             return new ListTaskPushNotificationConfigResponse(request.getId(),
                     new PushNotificationNotSupportedError());
         }
@@ -175,7 +175,7 @@ public class JSONRPCHandler {
     }
 
     public DeleteTaskPushNotificationConfigResponse deletePushNotificationConfig(DeleteTaskPushNotificationConfigRequest request) {
-        if ( !agentCard.capabilities().pushNotifications()) {
+        if (!agentCard.capabilities().pushNotifications()) {
             return new DeleteTaskPushNotificationConfigResponse(request.getId(),
                     new PushNotificationNotSupportedError());
         }
@@ -196,41 +196,43 @@ public class JSONRPCHandler {
     private Flow.Publisher<SendStreamingMessageResponse> convertToSendStreamingMessageResponse(
             Object requestId,
             Flow.Publisher<StreamingEventKind> publisher) {
-            // We can't use the normal convertingProcessor since that propagates any errors as an error handled
-            // via Subscriber.onError() rather than as part of the SendStreamingResponse payload
-            return ZeroPublisher.create(createTubeConfig(), tube -> {
-                publisher.subscribe(new Flow.Subscriber<StreamingEventKind>() {
-                    Flow.Subscription subscription;
-                    @Override
-                    public void onSubscribe(Flow.Subscription subscription) {
-                        this.subscription = subscription;
-                        subscription.request(1);
-                    }
+        // We can't use the normal convertingProcessor since that propagates any errors as an error handled
+        // via Subscriber.onError() rather than as part of the SendStreamingResponse payload
+        return ZeroPublisher.create(createTubeConfig(), tube -> {
+            publisher.subscribe(new Flow.Subscriber<StreamingEventKind>() {
+                Flow.Subscription subscription;
 
-                    @Override
-                    public void onNext(StreamingEventKind item) {
-                        tube.send(new SendStreamingMessageResponse(requestId, item));
-                        subscription.request(1);
-                    }
+                @Override
+                public void onSubscribe(Flow.Subscription subscription) {
+                    this.subscription = subscription;
+                    subscription.request(1);
+                }
 
-                    @Override
-                    public void onError(Throwable throwable) {
-                        if (throwable instanceof JSONRPCError jsonrpcError) {
-                            tube.send(new SendStreamingMessageResponse(requestId, jsonrpcError));
-                        } else {
-                            tube.send(
-                                    new SendStreamingMessageResponse(
-                                            requestId, new
-                                            InternalError(throwable.getMessage())));
-                        }
-                        onComplete();
-                    }
+                @Override
+                public void onNext(StreamingEventKind item) {
+                    tube.send(new SendStreamingMessageResponse(requestId, item));
+                    subscription.request(1);
+                }
 
-                    @Override
-                    public void onComplete() {
-                        tube.complete();
+                @Override
+                public void onError(Throwable throwable) {
+                    if (throwable instanceof JSONRPCError) {
+                        JSONRPCError jsonrpcError = (JSONRPCError) throwable;
+                        tube.send(new SendStreamingMessageResponse(requestId, jsonrpcError));
+                    } else {
+                        tube.send(
+                                new SendStreamingMessageResponse(
+                                        requestId, new
+                                        InternalError(throwable.getMessage())));
                     }
-                });
+                    onComplete();
+                }
+
+                @Override
+                public void onComplete() {
+                    tube.complete();
+                }
             });
+        });
     }
 }

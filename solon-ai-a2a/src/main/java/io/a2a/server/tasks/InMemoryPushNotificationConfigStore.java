@@ -1,7 +1,7 @@
 package io.a2a.server.tasks;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+//import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,12 +17,12 @@ import io.a2a.spec.PushNotificationConfig;
  *
  *     Stores push notification configurations in memory
  */
-@ApplicationScoped
+//@ApplicationScoped
 public class InMemoryPushNotificationConfigStore implements PushNotificationConfigStore {
 
     private final Map<String, List<PushNotificationConfig>> pushNotificationInfos = Collections.synchronizedMap(new HashMap<>());
 
-    @Inject
+    //@Inject
     public InMemoryPushNotificationConfigStore() {
     }
 

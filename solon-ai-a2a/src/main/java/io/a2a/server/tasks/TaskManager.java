@@ -130,11 +130,14 @@ public class TaskManager {
     }
 
     public Event process(Event event) throws A2AServerException {
-        if (event instanceof Task task) {
+        if (event instanceof Task) {
+            Task task = (Task) event;
             saveTask(task);
-        } else if (event instanceof TaskStatusUpdateEvent taskStatusUpdateEvent) {
+        } else if (event instanceof TaskStatusUpdateEvent) {
+            TaskStatusUpdateEvent taskStatusUpdateEvent =  (TaskStatusUpdateEvent) event;
             saveTaskEvent(taskStatusUpdateEvent);
-        } else if (event instanceof TaskArtifactUpdateEvent taskArtifactUpdateEvent) {
+        } else if (event instanceof TaskArtifactUpdateEvent) {
+            TaskArtifactUpdateEvent taskArtifactUpdateEvent =  (TaskArtifactUpdateEvent) event;
             saveTaskEvent(taskArtifactUpdateEvent);
         }
         return event;

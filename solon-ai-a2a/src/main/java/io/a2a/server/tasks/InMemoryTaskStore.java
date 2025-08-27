@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.enterprise.context.ApplicationScoped;
 
 import io.a2a.spec.Task;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class InMemoryTaskStore implements TaskStore {
 
     private final ConcurrentMap<String, Task> tasks = new ConcurrentHashMap<>();

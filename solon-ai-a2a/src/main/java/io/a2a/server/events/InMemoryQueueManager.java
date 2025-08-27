@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import jakarta.enterprise.context.ApplicationScoped;
+//import jakarta.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class InMemoryQueueManager implements QueueManager {
     private final ConcurrentMap<String, EventQueue> queues = new ConcurrentHashMap<>();
 
