@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -48,7 +49,7 @@ public class BasePushNotificationSender implements PushNotificationSender {
         List<CompletableFuture<Boolean>> dispatchResults = pushConfigs
                 .stream()
                 .map(pushConfig -> dispatch(task, pushConfig))
-                .toList();
+                .collect(Collectors.toList());
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(dispatchResults.toArray(new CompletableFuture[0]));
         CompletableFuture<Boolean> dispatchResult = allFutures.thenApply(v -> dispatchResults.stream()
                 .allMatch(CompletableFuture::join));
