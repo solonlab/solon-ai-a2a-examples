@@ -36,8 +36,10 @@ import io.a2a.spec.TaskNotFoundError;
 import io.a2a.spec.TaskPushNotificationConfig;
 import io.a2a.spec.TaskResubscriptionRequest;
 import mutiny.zero.ZeroPublisher;
+import org.noear.solon.annotation.Managed;
 
 //@ApplicationScoped
+@Managed
 public class JSONRPCHandler {
 
     private AgentCard agentCard;

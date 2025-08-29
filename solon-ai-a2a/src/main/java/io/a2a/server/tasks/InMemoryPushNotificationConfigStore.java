@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.a2a.spec.PushNotificationConfig;
+import org.noear.solon.annotation.Managed;
 
 /**
  * In-memory implementation of the PushNotificationConfigStore interface.
@@ -18,6 +19,7 @@ import io.a2a.spec.PushNotificationConfig;
  *     Stores push notification configurations in memory
  */
 //@ApplicationScoped
+@Managed
 public class InMemoryPushNotificationConfigStore implements PushNotificationConfigStore {
 
     private final Map<String, List<PushNotificationConfig>> pushNotificationInfos = Collections.synchronizedMap(new HashMap<>());

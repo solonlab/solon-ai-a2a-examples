@@ -9,8 +9,10 @@ import java.util.concurrent.ConcurrentMap;
 //import jakarta.enterprise.context.ApplicationScoped;
 
 import io.a2a.spec.Task;
+import org.noear.solon.annotation.Managed;
 
 //@ApplicationScoped
+@Managed
 public class InMemoryTaskStore implements TaskStore {
 
     private final ConcurrentMap<String, Task> tasks = new ConcurrentHashMap<>();

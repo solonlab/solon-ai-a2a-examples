@@ -50,10 +50,12 @@ import io.a2a.spec.UnsupportedOperationError;
 //import jakarta.enterprise.context.ApplicationScoped;
 //import jakarta.inject.Inject;
 
+import org.noear.solon.annotation.Managed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //@ApplicationScoped
+@Managed
 public class DefaultRequestHandler implements RequestHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRequestHandler.class);

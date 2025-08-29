@@ -1,5 +1,7 @@
 package io.a2a.server.events;
 
+import org.noear.solon.annotation.Managed;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 //import jakarta.enterprise.context.ApplicationScoped;
 
 //@ApplicationScoped
+@Managed
 public class InMemoryQueueManager implements QueueManager {
     private final ConcurrentMap<String, EventQueue> queues = new ConcurrentHashMap<>();
 

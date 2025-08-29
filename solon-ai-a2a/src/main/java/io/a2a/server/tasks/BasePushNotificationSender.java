@@ -17,10 +17,12 @@ import io.a2a.spec.PushNotificationConfig;
 import io.a2a.spec.Task;
 import io.a2a.util.Utils;
 
+import org.noear.solon.annotation.Managed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //@ApplicationScoped
+@Managed
 public class BasePushNotificationSender implements PushNotificationSender {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasePushNotificationSender.class);
