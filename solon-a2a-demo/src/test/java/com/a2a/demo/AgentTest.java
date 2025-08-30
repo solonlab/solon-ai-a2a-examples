@@ -17,7 +17,7 @@ public class AgentTest {
 
         ChatModel chatModel = ChatModel.of("http://127.0.0.1:11434/api/chat")
                 .provider("ollama")
-                .model("qwen3:4b")
+                .model("qwen2.5:latest")
                 .timeout(Duration.ofSeconds(600))
                 .build();
 

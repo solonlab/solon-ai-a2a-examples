@@ -1,5 +1,7 @@
 package io.a2a.client.apps.solon;
 
+import io.a2a.A2A;
+import io.a2a.client.A2AClient;
 import io.a2a.spec.Message;
 import io.a2a.spec.MessageSendParams;
 import io.a2a.spec.TextPart;
@@ -42,11 +44,13 @@ public class HostAgentAssistantTools {
         }
 
 
-        Message taskMessage = new Message.Builder().messageId("1").role(Message.Role.USER).parts(Arrays.asList(new TextPart(message))).build();
+        Message taskMessage = A2A.toUserMessage(message);
         MessageSendParams taskSendParams = new MessageSendParams.Builder()
                 .message(taskMessage)
                 .build();
 
-        return hostAgent.getA2AClientMap().get(agentName).sendMessage(taskSendParams).getResult().toString();
+        A2AClient a2AClient = hostAgent.getA2AClientMap().get(agentName);
+
+        return a2AClient.sendMessage(taskSendParams).getResult().toString();
     }
 }
