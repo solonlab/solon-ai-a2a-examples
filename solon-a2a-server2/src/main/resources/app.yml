@@ -6,9 +6,7 @@ solon.app:
 solon.logging:
   appender:
     console:
-      level: INFO
-    file:
-      level: INFO
+      level: DEBUG
 
 solon.ai:
   demo:
