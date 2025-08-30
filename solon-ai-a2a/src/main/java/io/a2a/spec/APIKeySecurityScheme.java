@@ -2,12 +2,15 @@ package io.a2a.spec;
 
 import com.fasterxml.jackson.annotation.*;
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Defines a security scheme using an API key.
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public final class APIKeySecurityScheme implements SecurityScheme {
 
     public static final String API_KEY = "apiKey";

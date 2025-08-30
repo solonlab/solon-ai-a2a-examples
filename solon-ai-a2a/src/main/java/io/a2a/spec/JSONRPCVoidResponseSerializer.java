@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import lombok.Value;
 
 import java.io.IOException;
 
+@Value
 public class JSONRPCVoidResponseSerializer extends StdSerializer<JSONRPCResponse<Void>> {
 
     private static final JSONRPCErrorSerializer JSON_RPC_ERROR_SERIALIZER = new JSONRPCErrorSerializer();

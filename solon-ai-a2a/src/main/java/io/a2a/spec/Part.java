@@ -3,6 +3,8 @@ package io.a2a.spec;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
@@ -21,6 +23,8 @@ import java.util.Map;
         @JsonSubTypes.Type(value = FilePart.class, name = "file"),
         @JsonSubTypes.Type(value = DataPart.class, name = "data")
 })
+@NoArgsConstructor
+@Data
 public abstract class Part<T> {
     public enum Kind {
         TEXT("text"),

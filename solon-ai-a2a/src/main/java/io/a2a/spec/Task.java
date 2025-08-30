@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Value
 public final class Task implements EventKind, StreamingEventKind {
 
     public static final TypeReference<Task> TYPE_REFERENCE = new TypeReference<Task>() {};

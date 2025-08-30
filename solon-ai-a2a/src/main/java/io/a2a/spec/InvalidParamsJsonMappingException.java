@@ -1,5 +1,8 @@
 package io.a2a.spec;
 
+import lombok.Value;
+
+@Value
 public class InvalidParamsJsonMappingException extends IdJsonMappingException {
 
     public InvalidParamsJsonMappingException(String msg, Object id) {

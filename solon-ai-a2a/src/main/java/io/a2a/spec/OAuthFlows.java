@@ -2,12 +2,16 @@ package io.a2a.spec;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Defines the configuration for the supported OAuth 2.0 flows.
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@Data
 public class OAuthFlows {
     AuthorizationCodeOAuthFlow authorizationCode;
     ClientCredentialsOAuthFlow clientCredentials;

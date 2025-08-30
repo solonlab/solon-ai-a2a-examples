@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -15,6 +17,8 @@ import static io.a2a.util.Utils.defaultIfNull;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@Data
 public final class GetTaskRequest extends NonStreamingJSONRPCRequest<TaskQueryParams> {
 
     public static final String METHOD = "tasks/get";

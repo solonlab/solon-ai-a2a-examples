@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import java.util.Map;
 
@@ -14,6 +17,7 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Value
 public final class TaskStatusUpdateEvent implements EventKind, StreamingEventKind {
 
     public static final String STATUS_UPDATE = "status-update";

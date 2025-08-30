@@ -5,12 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * A JSON RPC error response.
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@Data
 public final class JSONRPCErrorResponse extends JSONRPCResponse<Void> {
 
     @JsonCreator

@@ -1,5 +1,8 @@
 package io.a2a.spec;
 
+import lombok.Value;
+
+@Value
 public class MethodNotFoundJsonMappingException extends IdJsonMappingException {
 
     public MethodNotFoundJsonMappingException(String msg, Object id) {

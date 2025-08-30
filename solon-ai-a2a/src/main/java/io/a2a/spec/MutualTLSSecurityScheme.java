@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Value;
 
 /**
  * Defines a security scheme using mTLS authentication.
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Value
 public final class MutualTLSSecurityScheme implements SecurityScheme {
 
     public static final String MUTUAL_TLS = "mutualTLS";

@@ -3,6 +3,8 @@ package io.a2a.spec;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@Data
 public class Artifact {
     String artifactId;
     String name;

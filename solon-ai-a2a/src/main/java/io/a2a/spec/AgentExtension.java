@@ -1,12 +1,16 @@
 package io.a2a.spec;
 
 import io.a2a.util.Assert;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
 /**
  * A declaration of a protocol extension supported by an Agent.
  */
+@NoArgsConstructor
+@Data
 public class AgentExtension{
     String description;
     Map<String, Object> params;

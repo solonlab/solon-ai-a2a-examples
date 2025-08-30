@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
 
 import static io.a2a.util.Utils.defaultIfNull;
 
@@ -12,6 +15,7 @@ import static io.a2a.util.Utils.defaultIfNull;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Value
 public class UnsupportedOperationError extends JSONRPCError {
 
     public final static Integer DEFAULT_CODE = -32004;

@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 
+@Data
 public class NonStreamingJSONRPCRequestDeserializer extends JSONRPCRequestDeserializerBase<NonStreamingJSONRPCRequest<?>> {
 
     public NonStreamingJSONRPCRequestDeserializer() {
