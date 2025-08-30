@@ -18,8 +18,6 @@ public class Utils {
     }
 
     public static <T> T unmarshalFrom(String data, TypeReference<T> typeRef) throws JsonProcessingException {
-        log.debug("unmarshalFrom: {}, to: {}", data, typeRef.getType());
-
         return OBJECT_MAPPER.readValue(data, typeRef);
     }
 

@@ -1,11 +1,11 @@
 package io.a2a.http;
 
-import org.noear.solon.annotation.Http;
 import org.noear.solon.net.http.HttpResponse;
 import org.noear.solon.net.http.HttpUtils;
-import org.noear.solon.net.http.HttpUtilsBuilder;
 import org.noear.solon.net.http.textstream.ServerSentEvent;
 import org.noear.solon.rx.SimpleSubscriber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +15,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class JdkA2AHttpClient implements A2AHttpClient {
+    static final Logger log = LoggerFactory.getLogger(JdkA2AHttpClient.class);
+
     @Override
     public GetBuilder createGet() {
         return new JdkGetBuilder();
@@ -57,6 +59,10 @@ public class JdkA2AHttpClient implements A2AHttpClient {
             request.execAsSseStream(method)
                     .subscribe(new SimpleSubscriber<ServerSentEvent>()
                             .doOnNext(sse -> {
+                                if(log.isDebugEnabled()) {
+                                    log.debug("A2A response sse data: {}", sse.getData());
+                                }
+
                                 messageConsumer.accept(sse.getData());
                             })
                             .doOnError(err -> {
@@ -87,6 +93,10 @@ public class JdkA2AHttpClient implements A2AHttpClient {
 
             if (SSE) {
                 http.header("Accept", "text/event-stream");
+            }
+
+            if(log.isDebugEnabled()) {
+                log.debug("A2A get request: {}", url);
             }
 
             return http;
@@ -127,6 +137,10 @@ public class JdkA2AHttpClient implements A2AHttpClient {
 
             if (SSE) {
                 http.header("Accept", "text/event-stream");
+            }
+
+            if(log.isDebugEnabled()) {
+                log.debug("A2A post request: {}, body: {}", url, body);
             }
 
             return http;
@@ -174,7 +188,13 @@ public class JdkA2AHttpClient implements A2AHttpClient {
         @Override
         public String body() {
             try {
-                return response.bodyAsString();
+                String bodyStr = response.bodyAsString();
+
+                if(log.isDebugEnabled()) {
+                    log.debug("A2A response body: {}", bodyStr);
+                }
+
+                return bodyStr;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
