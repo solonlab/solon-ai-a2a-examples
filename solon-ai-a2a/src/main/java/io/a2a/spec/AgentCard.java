@@ -3,9 +3,7 @@ package io.a2a.spec;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.a2a.util.Assert;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Value;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,8 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Value
+@NoArgsConstructor
+@Data
 public class AgentCard {
     String name;
     String description;

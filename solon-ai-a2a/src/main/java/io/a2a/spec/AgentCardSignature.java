@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.a2a.util.Assert;
-import lombok.Data;
-import lombok.Value;
+import lombok.*;
 
 import java.util.Map;
 
@@ -15,15 +14,18 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Value
+@NoArgsConstructor
+@Data
 public class AgentCardSignature {
+    @JsonProperty("header")
     Map<String, Object> header;
     @JsonProperty("protected")
     String protectedHeader;
+    @JsonProperty("signature")
     String signature;
 
-    public AgentCardSignature(Map<String, Object> header, @JsonProperty("protected") String protectedHeader,
-                              String signature) {
+    public AgentCardSignature(@JsonProperty("header") Map<String, Object> header, @JsonProperty("protected") String protectedHeader,
+                              @JsonProperty("signature") String signature) {
         Assert.checkNotNullParam("protectedHeader", protectedHeader);
         Assert.checkNotNullParam("signature", signature);
 

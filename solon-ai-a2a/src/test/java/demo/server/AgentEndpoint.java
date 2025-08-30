@@ -9,5 +9,5 @@ import org.noear.solon.annotation.Controller;
  *
  */
 @Controller
-public class A2AServerEndpointImpl extends A2AServerEndpoint {
+public class AgentEndpoint extends A2AServerEndpoint {
 }

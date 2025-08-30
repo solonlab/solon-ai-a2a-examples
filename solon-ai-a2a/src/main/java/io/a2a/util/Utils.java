@@ -4,8 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.noear.snack.ONode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Utils {
+    static final Logger log = LoggerFactory.getLogger(Utils.class);
 
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     static {
@@ -14,6 +18,8 @@ public class Utils {
     }
 
     public static <T> T unmarshalFrom(String data, TypeReference<T> typeRef) throws JsonProcessingException {
+        log.debug("unmarshalFrom: {}, to: {}", data, typeRef.getType());
+
         return OBJECT_MAPPER.readValue(data, typeRef);
     }
 
