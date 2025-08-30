@@ -1,7 +1,7 @@
 package com.a2a.demo;
 
+import io.a2a.client.apps.solon.HostAgent;
 import org.junit.jupiter.api.Test;
-import io.a2a_preview.client.HostAgent;
 import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.test.SolonTest;

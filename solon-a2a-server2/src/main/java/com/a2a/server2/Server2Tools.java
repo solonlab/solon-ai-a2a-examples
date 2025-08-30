@@ -1,4 +1,4 @@
-package com.a2a.server2.tool;
+package com.a2a.server2;
 
 import org.noear.snack.core.utils.StringUtil;
 import org.noear.solon.ai.annotation.ToolMapping;

@@ -1,4 +1,4 @@
-package com.a2a.server1.tool;
+package com.a2a.server1;
 
 import org.noear.solon.ai.annotation.ToolMapping;
 import org.noear.solon.annotation.Param;
