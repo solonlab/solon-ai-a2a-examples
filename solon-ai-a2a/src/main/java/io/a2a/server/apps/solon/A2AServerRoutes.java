@@ -1,4 +1,4 @@
-package io.a2a.solon.integration;
+package io.a2a.server.apps.solon;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +22,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Flow;
 
 
-public class A2AServerEndpoint {
+public class A2AServerRoutes {
 
     @Inject
     JSONRPCHandler jsonRpcHandler;

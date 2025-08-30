@@ -1,6 +1,6 @@
 package demo.server;
 
-import io.a2a.solon.integration.A2AServerEndpoint;
+import io.a2a.server.apps.solon.A2AServerRoutes;
 import org.noear.solon.annotation.Controller;
 
 /**
@@ -9,5 +9,5 @@ import org.noear.solon.annotation.Controller;
  *
  */
 @Controller
-public class AgentEndpoint extends A2AServerEndpoint {
+public class A2AServerRoutesImpl extends A2AServerRoutes {
 }
