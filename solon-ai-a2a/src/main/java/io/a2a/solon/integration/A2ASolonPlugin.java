@@ -1,5 +1,6 @@
 package io.a2a.solon.integration;
 
+import io.a2a.server.ExtendedAgentCard;
 import io.a2a.server.PublicAgentCard;
 import io.a2a.server.ServerCallContext;
 import io.a2a.server.util.async.Internal;
@@ -27,6 +28,13 @@ public class A2ASolonPlugin implements Plugin {
                 bw.context().wrapAndPut(method.getReturnType(), bean);
             });
         });
+
+        context.beanInjectorAdd(ExtendedAgentCard.class, (vh, anno) -> {
+            vh.context().getBeanAsync(vh.getType(), bean -> {
+                vh.setValue(bean);
+            });
+        });
+
 
         /// ////////
 
