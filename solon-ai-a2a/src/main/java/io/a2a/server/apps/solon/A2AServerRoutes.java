@@ -14,7 +14,6 @@ import io.smallrye.mutiny.Multi;
 import org.noear.solon.annotation.*;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.util.MimeType;
-import org.noear.solon.server.handle.HeaderNames;
 import org.noear.solon.web.sse.SseEmitter;
 
 import java.io.IOException;
@@ -57,7 +56,7 @@ public class A2AServerRoutes {
             error = new JSONRPCErrorResponse(new InternalError(t.getMessage()));
         } finally {
             if (error != null) {
-                rc.headerSet(HeaderNames.HEADER_CONTENT_TYPE, MimeType.APPLICATION_JSON_VALUE);
+                rc.contentType(MimeType.APPLICATION_JSON_VALUE);
                 rc.output(Utils.OBJECT_MAPPER.writeValueAsBytes(error));
             } else if (streaming) {
                 final Multi<? extends JSONRPCResponse<?>> finalStreamingResponse = streamingResponse;
@@ -98,7 +97,7 @@ public class A2AServerRoutes {
 
                rc.returnValue(sseEmitter);
             } else {
-                rc.headerSet(HeaderNames.HEADER_CONTENT_TYPE, MimeType.APPLICATION_JSON_VALUE);
+                rc.contentType(MimeType.APPLICATION_JSON_VALUE);
                 rc.output(Utils.OBJECT_MAPPER.writeValueAsBytes(nonStreamingResponse));
             }
         }
