@@ -2,9 +2,7 @@ package io.a2a.client.apps.solon;
 
 import io.a2a.A2A;
 import io.a2a.client.A2AClient;
-import io.a2a.spec.Message;
-import io.a2a.spec.MessageSendParams;
-import io.a2a.spec.TextPart;
+import io.a2a.spec.*;
 import org.noear.solon.ai.annotation.ToolMapping;
 import org.noear.solon.annotation.Param;
 import org.slf4j.Logger;
@@ -51,6 +49,17 @@ public class HostAgentAssistantTools {
 
         A2AClient a2AClient = hostAgent.getA2AClientMap().get(agentName);
 
-        return a2AClient.sendMessage(taskSendParams).getResult().toString();
+        SendMessageResponse messageResponse = a2AClient.sendMessage(taskSendParams);
+        if (messageResponse.getResult() instanceof Message) {
+            Message message1 = (Message) messageResponse.getResult();
+            if (message1.getParts().size() > 0) {
+                Part part1 = message1.getParts().get(0);
+                if (part1 instanceof TextPart) {
+                    return ((TextPart) part1).getText();
+                }
+            }
+        }
+
+        throw new IllegalStateException("Invalid response");
     }
 }
