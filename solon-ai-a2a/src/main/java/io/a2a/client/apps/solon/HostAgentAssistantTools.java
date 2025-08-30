@@ -1,4 +1,4 @@
-package io.a2a.client;
+package io.a2a.client.apps.solon;
 
 import io.a2a.spec.Message;
 import io.a2a.spec.MessageSendParams;

@@ -1,5 +1,6 @@
-package io.a2a.client;
+package io.a2a.client.apps.solon;
 
+import io.a2a.client.A2AClient;
 import io.a2a.spec.A2AClientError;
 import io.a2a.spec.A2AClientJSONError;
 import io.a2a.spec.AgentCard;
