@@ -5,6 +5,8 @@ import io.a2a.spec.MessageSendParams;
 import io.a2a.spec.TextPart;
 import org.noear.solon.ai.annotation.ToolMapping;
 import org.noear.solon.annotation.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Map;
  * @author haiTao.Wang on 2025/8/21.
  */
 public class HostAgentAssistantTools {
+    static final Logger log = LoggerFactory.getLogger(HostAgentAssistantTools.class);
+
     private HostAgent hostAgent;
 
     public HostAgentAssistantTools(HostAgent hostAgent) {
@@ -22,8 +26,10 @@ public class HostAgentAssistantTools {
 
     @ToolMapping(description = "List the available remote agents you can use to delegate the task.")
     public List<Map<String, String>> list_remote_agents() {
+        if (log.isDebugEnabled()) {
+            log.debug("list_remote_agents:" + hostAgent.getAgentInfo());
+        }
 
-        System.err.println("list_remote_agents:" + hostAgent.getAgentInfo());
         return hostAgent.getAgentInfo();
     }
 
@@ -31,9 +37,12 @@ public class HostAgentAssistantTools {
     public String send_message(@Param(description = "要将任务发送给的代理的名称") String agentName,
                                @Param(description = "需要发送给执行该任务的代理的信息") String message) throws Exception {
 
-        System.err.println("send_message:" + agentName + ":" + message);
+        if (log.isDebugEnabled()) {
+            log.debug("send_message:" + agentName + ":" + message);
+        }
 
-        Message taskMessage = new Message.Builder().messageId("1").role(Message.Role.USER).parts( Arrays.asList(new TextPart(message))).build();
+
+        Message taskMessage = new Message.Builder().messageId("1").role(Message.Role.USER).parts(Arrays.asList(new TextPart(message))).build();
         MessageSendParams taskSendParams = new MessageSendParams.Builder()
                 .message(taskMessage)
                 .build();

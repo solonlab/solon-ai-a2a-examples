@@ -15,6 +15,8 @@ import org.noear.solon.annotation.*;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.util.MimeType;
 import org.noear.solon.web.sse.SseEmitter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -22,6 +24,7 @@ import java.util.concurrent.Flow;
 
 
 public class A2AServerRoutes {
+    static final Logger log = LoggerFactory.getLogger(A2AServerRoutes.class);
 
     @Inject
     JSONRPCHandler jsonRpcHandler;
@@ -51,8 +54,12 @@ public class A2AServerRoutes {
                 nonStreamingResponse = processNonStreamingRequest(request);
             }
         } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
+
             error = handleError(e);
         } catch (Throwable t) {
+            log.error(t.getMessage(), t);
+
             error = new JSONRPCErrorResponse(new InternalError(t.getMessage()));
         } finally {
             if (error != null) {

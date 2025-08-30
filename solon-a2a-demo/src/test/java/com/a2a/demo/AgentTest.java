@@ -6,7 +6,9 @@ import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.test.SolonTest;
 
-@SolonTest
+import java.time.Duration;
+
+@SolonTest(ClientApp.class)
 public class AgentTest {
 
     @Test
@@ -15,7 +17,8 @@ public class AgentTest {
 
         ChatModel chatModel = ChatModel.of("http://127.0.0.1:11434/api/chat")
                 .provider("ollama")
-                .model("qwen2.5:latest")
+                .model("qwen3:4b")
+                .timeout(Duration.ofSeconds(600))
                 .build();
 
         agent.addChatModel(chatModel);

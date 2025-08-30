@@ -4,6 +4,7 @@ import io.a2a.client.A2AClient;
 import io.a2a.spec.A2AClientError;
 import io.a2a.spec.A2AClientJSONError;
 import io.a2a.spec.AgentCard;
+import org.noear.solon.Utils;
 import org.noear.solon.ai.chat.ChatModel;
 import org.noear.solon.ai.chat.ChatResponse;
 import org.noear.solon.ai.chat.ChatSession;
@@ -12,6 +13,8 @@ import org.noear.solon.ai.chat.message.SystemMessage;
 import org.noear.solon.ai.chat.tool.MethodToolProvider;
 import org.noear.solon.ai.chat.tool.ToolProvider;
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +26,8 @@ import java.util.Map;
  * @author by HaiTao.Wang on 2025/8/21.
  */
 public class HostAgent {
+    static final Logger log = LoggerFactory.getLogger(HostAgent.class);
+
     private ChatModel chatModel = null;
     private final ToolProvider agentTools;
 
@@ -52,7 +57,7 @@ public class HostAgent {
     public void register(String remoteAddress) throws A2AClientError, A2AClientJSONError {
 
         if (remoteAddress.isEmpty()) {
-            System.err.println("No remote address provided. Skipping agent registration.");
+            log.warn("No remote address provided. Skipping agent registration.");
             return;
         }
 
@@ -62,12 +67,9 @@ public class HostAgent {
 
         a2AClientMap.put(agentCard.getName(), a2AClient);
 
-        agentInfo.add(new HashMap<String, String>() {
-            {
-                put("agentName", agentCard.getName());
-                put("description", agentCard.getDescription());
-            }
-        });
+        agentInfo.add(Utils.asMap(
+                "agentName", agentCard.getName(),
+                "description", agentCard.getDescription()));
     }
 
     public ChatResponse chatCall(String prompt) throws IOException {

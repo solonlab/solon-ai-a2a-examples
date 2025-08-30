@@ -35,7 +35,7 @@ public class A2AServerConfig {
         return new AgentCard.Builder()
                 .name("spot_agent")
                 .description("A professional scenic spot recommendation assistant. It can accurately recommend attractions and places to visit.")
-                .url("http://localhost:9999")
+                .url("http://localhost:10002")
                 .version("1.0.0")
                 //.provider(new AgentProvider("ollama", "http://127.0.0.1:11434/api/chat"))
                 .documentationUrl("http://example.com/docs")
