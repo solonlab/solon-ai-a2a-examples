@@ -138,7 +138,7 @@ public class A2AServerEndpoint {
      */
     @Produces(MimeType.APPLICATION_JSON_VALUE)
     @Get
-    @Mapping("/.well-known/agent.json")
+    @Mapping("/.well-known/agent-card.json")
     public AgentCard getAgentCard() {
         return jsonRpcHandler.getAgentCard();
     }

@@ -86,7 +86,7 @@ public class A2ACardResolver {
         try {
             A2AHttpResponse response = builder.get();
             if (!response.success()) {
-                throw new A2AClientError("Failed to obtain agent card: " + response.status());
+                throw new A2AClientError("Failed to obtain agent card: " + response.status()+", url: " + url);
             }
             body = response.body();
         } catch (IOException | InterruptedException e) {

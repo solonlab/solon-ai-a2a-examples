@@ -3,6 +3,9 @@ package io.a2a.spec;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.a2a.util.Assert;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Value
 public class AgentCard {
     String name;
     String description;
@@ -38,6 +42,7 @@ public class AgentCard {
     private static final String TEXT_MODE = "text";
     private static final String DEFAULT_PROTOCOL_VERSION = "0.3.0";
     private static final TransportProtocol DEFAULT_TRANSPORT = TransportProtocol.JSONRPC;
+
 
     public AgentCard(String name, String description, String url, AgentProvider provider,
                      String version, String documentationUrl, AgentCapabilities capabilities,

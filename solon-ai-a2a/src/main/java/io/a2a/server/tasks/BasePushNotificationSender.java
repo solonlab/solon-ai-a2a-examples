@@ -36,10 +36,10 @@ public class BasePushNotificationSender implements PushNotificationSender {
         this.configStore = configStore;
     }
 
-    public BasePushNotificationSender(PushNotificationConfigStore configStore, A2AHttpClient httpClient) {
-        this.configStore = configStore;
-        this.httpClient = httpClient;
-    }
+//    public BasePushNotificationSender(PushNotificationConfigStore configStore, A2AHttpClient httpClient) {
+//        this.configStore = configStore;
+//        this.httpClient = httpClient;
+//    }
 
     @Override
     public void sendNotification(Task task) {

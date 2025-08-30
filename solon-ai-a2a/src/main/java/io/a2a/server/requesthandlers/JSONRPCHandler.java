@@ -36,23 +36,16 @@ import io.a2a.spec.TaskNotFoundError;
 import io.a2a.spec.TaskPushNotificationConfig;
 import io.a2a.spec.TaskResubscriptionRequest;
 import mutiny.zero.ZeroPublisher;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Managed;
 
 //@ApplicationScoped
 @Managed
 public class JSONRPCHandler {
-
+    @PublicAgentCard
     private AgentCard agentCard;
+    @Inject
     private RequestHandler requestHandler;
-
-    protected JSONRPCHandler() {
-    }
-
-    //@Inject
-    public JSONRPCHandler(@PublicAgentCard AgentCard agentCard, RequestHandler requestHandler) {
-        this.agentCard = agentCard;
-        this.requestHandler = requestHandler;
-    }
 
     public SendMessageResponse onMessageSend(SendMessageRequest request) {
         try {

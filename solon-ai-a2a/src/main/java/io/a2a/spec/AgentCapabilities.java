@@ -2,6 +2,7 @@ package io.a2a.spec;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Value;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Value
 public class AgentCapabilities {
     boolean streaming;
     boolean pushNotifications;
